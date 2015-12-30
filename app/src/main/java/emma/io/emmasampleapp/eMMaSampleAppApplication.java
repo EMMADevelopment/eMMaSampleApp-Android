@@ -19,5 +19,6 @@ public class eMMaSampleAppApplication extends Application {
 
         //Starting push system
         eMMa.startPushSystem(this, MainActivity.class,R.drawable.logo, false);
+
     }
 }
