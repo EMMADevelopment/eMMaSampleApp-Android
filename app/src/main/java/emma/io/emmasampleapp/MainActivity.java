@@ -49,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
 
         //Check for any StartView
         eMMa.checkForWebview(this);
+
+        //Check push received options
+        eMMa.checkForRichPushUrl(this);
+    }
+
+    //Used when app is open and it receives a new Push
+    @Override
+    public void onNewIntent(Intent intent){
+        eMMa.onNewNotification(this,intent,true);
     }
 
     @Override

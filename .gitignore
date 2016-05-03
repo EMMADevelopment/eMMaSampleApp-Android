@@ -44,3 +44,4 @@ Optional - for older project format, add this section to your gitignore file:
 *.ipr
 *~
 *.swp
+*.jks

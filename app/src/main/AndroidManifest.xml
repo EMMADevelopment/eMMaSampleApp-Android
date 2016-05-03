@@ -65,6 +65,15 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name="com.emma.android.eMMaPushBroadcastReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="con.emma.android.PUSH_OPEN"/>
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="1e14c430ceb6ed00eb4766b5b7e4e6e745dfb54c" />
     </application>
 
 </manifest>
