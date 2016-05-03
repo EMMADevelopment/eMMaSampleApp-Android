@@ -18,7 +18,7 @@ public class eMMaSampleAppApplication extends Application {
         eMMa.setDebuggerOutput(true);
 
         //eMMa Initialization
-        eMMa.starteMMaSession(this, "emmasampleappJ2KIPmSms");
+        eMMa.starteMMaSession(this, "emmamobileM6wQcLX8S");
 
         //Starting push system
         eMMa.startPushSystem(this, MainActivity.class,R.drawable.logo, false);
