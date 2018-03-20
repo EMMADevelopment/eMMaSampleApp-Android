@@ -3,7 +3,7 @@ package emma.io.emmasampleapp;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.emma.android.eMMa;
+import io.emma.android.EMMA;
 
 /**
  * Created by adrian on 16/12/15.
@@ -15,6 +15,6 @@ public class ThanksActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thanks_layout);
 
-        eMMa.trackEvent(this,"c8ba0668ab5c55a709ea75da15883f3e");
+        EMMA.getInstance().trackEvent("c8ba0668ab5c55a709ea75da15883f3e");
     }
 }

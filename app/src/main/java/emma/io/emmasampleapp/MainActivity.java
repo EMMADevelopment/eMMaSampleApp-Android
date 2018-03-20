@@ -2,11 +2,9 @@ package emma.io.emmasampleapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +16,8 @@ import com.emma.android.eMMa;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.emma.android.eMMa;
+import io.emma.android.EMMA;
+import io.emma.android.model.EMMACampaign;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 Map<String,String> map = new HashMap<>();
                 map.put("GENDER",tButton.isChecked()? "Male" :"Woman");
 
-                eMMa.trackExtraUserInfo(MainActivity.this, map);
+                EMMA.getInstance().trackExtraUserInfo( map);
 
                 Intent intent = new Intent(MainActivity.this,ThanksActivity.class);
                 startActivity(intent);
@@ -48,16 +47,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Check for any StartView
-        eMMa.checkForWebview(this);
+        EMMA.getInstance().getInAppMessage(EMMACampaign.Type.STARTVIEW);
 
         //Check push received options
-        eMMa.checkForRichPushUrl(this);
+        EMMA.getInstance().checkForRichPushUrl();
     }
 
     //Used when app is open and it receives a new Push
     @Override
     public void onNewIntent(Intent intent){
-        eMMa.onNewNotification(this,intent,true);
+        eMMa.onNewNotification(intent,true);
     }
 
     @Override

@@ -2,30 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="emma.io.emmasampleapp">
 
+    <!-- RUNTIME PERMISSIONS -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
-    <!-- eMMa Required Permissions -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- NORMAL PERMISSIONS -->
+    <uses-permission android:name="emma.io.emmasampleapp.C2D_MESSAGE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
 
-    <!-- If you plan to use Android Advertising ID -->
-    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-
-    <!-- eMMa Optional Permissions -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <!-- eMMa Push Permissions -->
-    <permission android:name="emma.io.emmasampleapp.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-    <uses-permission android:name="emma.io.emmasampleapp.permission.C2D_MESSAGE" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <permission
+        android:name="emma.io.emmasampleapp.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"/>
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -49,35 +39,85 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <!-- eMMa Install Referrer Receiver-->
-        <receiver android:name="com.emma.android.eMMaReferralReceiver" android:exported="true">
+        <receiver
+            android:name="io.emma.android.referral.EMMAInstallsBroadcastReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER"/>
             </intent-filter>
         </receiver>
 
-        <!-- eMMa Push Receiver -->
-        <service android:name="com.emma.android.eMMaGCMReceiver" />
-        <receiver android:name="com.emma.android.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+        <receiver
+            android:name="io.emma.android.referral.EMMAReferralReceiver"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-                <category android:name="emma.io.emmasampleapp" />
+                <action android:name="com.android.vending.INSTALL_REFERRER"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.emma.android.eMMaPushBroadcastReceiver" android:exported="true">
+        <!-- PUSH -->
+        <receiver
+            android:name="io.emma.android.push.EMMAGCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
-                <action android:name="con.emma.android.PUSH_OPEN"/>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <category android:name="emma.io.emmasampleapp"/>
             </intent-filter>
         </receiver>
+
+        <service
+            android:name="io.emma.android.push.EMMAInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name="io.emma.android.activities.EMMADeepLinkActivity"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="emmasample"/>
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="emmasample.powlink-beta.emma.io"
+                    android:scheme="https"/>
+                <data
+                    android:host="emmasample.powlink-pre.emma.io"
+                    android:scheme="https"/>
+                <data
+                    android:host="emmasample.powlink.io"
+                    android:scheme="https"/>
+
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="io.emma.SESSION_KEY"
+            android:value="@string/emma_session_key"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="1e14c430ceb6ed00eb4766b5b7e4e6e745dfb54c" />
+
         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/play_services_version" />
+            android:name="io.emma.DEEPLINK_OPEN_ACTIVITY"
+            android:value="@string/deeplink_activity"/>
+
     </application>
 
 </manifest>

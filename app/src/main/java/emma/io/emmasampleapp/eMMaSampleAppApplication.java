@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.emma.android.eMMa;
 import com.crashlytics.android.Crashlytics;
+
+import io.emma.android.EMMA;
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -14,14 +16,18 @@ public class eMMaSampleAppApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-        //enable debug
-        eMMa.setDebuggerOutput(true);
 
-        //eMMa Initialization
-        eMMa.starteMMaSession(this, "emmamobileM6wQcLX8S");
+        //enable debug
+        EMMA.Configuration configuration = new EMMA.Configuration.Builder(this)
+                .setQueueTime(25)
+                .setDebugActive(true)
+                .build();
+
+        //Initialization
+        EMMA.getInstance().startSession(configuration);
 
         //Starting push system
-        eMMa.startPushSystem(this, MainActivity.class,R.drawable.logo, false);
+        EMMA.getInstance().startPushSystem( MainActivity.class, R.drawable.logo, false);
 
     }
 }

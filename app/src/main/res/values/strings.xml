@@ -5,4 +5,6 @@
     <string name="switch_off">Woman</string>
     <string name="gender_title">Select your gender</string>
     <string name="next">Next</string>
+    <string name="emma_session_key">"emmamobileM6wQcLX8S"</string>
+    <string name="deeplink_activity">emma.io.emmasampleapp.MainActivity</string>
 </resources>
